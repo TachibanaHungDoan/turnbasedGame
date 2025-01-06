@@ -23,16 +23,16 @@ public class Enemy {
         return this.health;
     }
 
-    public boolean canAct() {
-        return this.health > 0;
-    }
-
     public int getAttack() {
         return this.attack;
     }
 
     public void takeDamage(int damage) {
-        this.health -= damage;
+        int damageTaken = (int) Math.ceil( (double) damage / ((this.defense + 100) / 100.0));
+        this.health -= damageTaken;
+        if (this.health <= 0) {
+            this.health = 0;
+        }
     }
 
     public boolean isAlive() {
@@ -40,7 +40,6 @@ public class Enemy {
     }
 
     public String getName() {
-        // TODO Auto-generated method stub
         return name;
     }
 }

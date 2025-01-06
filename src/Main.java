@@ -9,10 +9,10 @@ public class Main {
         Player player = new Player(playerName);
 
         System.out.println("Choose your elemental affinity:");
-        System.out.println("1. Water (Healer - Heal 20% health every 5 turns)");
-        System.out.println("2. Earth (Tank - 8% chance to avoid damage)");
-        System.out.println("3. Fire (Warrior - 18% chance for critical hit)");
-        System.out.println("4. Air (Quick - 18% chance for an extra turn)");
+        System.out.println("1. Water (Healer - Have the ability to heal all your allies 20% health)");
+        System.out.println("2. Earth (Tanker - Have the ability to increase your allies defense in 3 turns)");
+        System.out.println("3. Fire (Warrior - 40% chance for critical hit that deals double damage)");
+        System.out.println("4. Air (Quick - Have the ability to attack all the enemies)");
 
         int choice = scanner.nextInt();
 
@@ -30,9 +30,9 @@ public class Main {
         }
 
         Enemy[] enemies = { new Enemy("Wolf1", 100, 500, 0, "Fire"), new Enemy("Wolf2", 100, 500, 0, "Fire") };
-        Player[] allies = { player };
+        Player[] teams = { player };
 
-        Battle battle = new Battle(player, allies, enemies);
+        Battle battle = new Battle(player, teams, enemies);
         battle.start();
 
         scanner.close();

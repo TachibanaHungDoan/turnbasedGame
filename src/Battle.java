@@ -1,11 +1,11 @@
 public class Battle {
     Player player;
-    Player[] allies;
+    Player[] teams;
     Enemy[] enemies;
 
-    public Battle(Player player, Player[] allies, Enemy[] enemies) {
+    public Battle(Player player, Player[] teams, Enemy[] enemies) {
         this.player = player;
-        this.allies = allies;
+        this.teams = teams;
         this.enemies = enemies;
     }
 
@@ -26,13 +26,20 @@ public class Battle {
                 }
             }
 
-            player.takeTurn(enemies);
+            for (Player player : teams) {
+                player.takeTurn(enemies, teams);
+            }
 
             for (Enemy enemy : enemies) {
                 if (enemy.isAlive()) {
                     int damage = enemy.getAttack();
-                    player.takeDamage(damage);
-                    System.out.println(enemy.getName() + " attacks for " + damage + " damage.");
+                    Player attackedPlayer = null;
+                    while (attackedPlayer == null || !attackedPlayer.isAlive()) {
+                        int attackedPlayerIndex = (int) (Math.random() * teams.length);
+                        attackedPlayer = teams[attackedPlayerIndex];
+                    }
+                    System.out.println(enemy.getName() + " attacks " + attackedPlayer.name + " for " + damage + " damage.");
+                    attackedPlayer.takeDamage(damage);
                 }
             }
 
@@ -41,7 +48,7 @@ public class Battle {
 
             if (turnCount % 5 == 0 && player.getElement().equals("Water")) {
                 System.out.println("Water Element - Healing 20% health.");
-                player.heal(20);
+                //player.heal(20);
             }
 
             if (battleOver) {
@@ -55,8 +62,15 @@ public class Battle {
         }
     }
 
-    private boolean isGameOver() {
-        if (!player.isAlive()) {
+    public boolean isGameOver() {
+        boolean allAlliesDead = true;
+        for (int i = 0; i < teams.length; i++) {
+            if (teams[i].isAlive()) {
+                allAlliesDead = false;
+                break;
+            }
+        }
+        if (allAlliesDead) {
             return true;
         }
         boolean allEnemiesDead = true;
