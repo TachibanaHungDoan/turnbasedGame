@@ -15,6 +15,7 @@ public class Game {
         createPlayer();
         System.out.println("Chapter 1: ");
         chapter1();
+        chapter2ToTest();
     }
 
     public void createPlayer() {
@@ -56,4 +57,16 @@ public class Game {
         Battle battle = new Battle(allyTeam, enemies);
         battle.start();
     }
+
+    public void chapter2ToTest() {
+        enemies = new Enemy[2];
+        enemies[0] = new Enemy("Wolf 1", 100, 500, 0, "Fire");
+        enemies[1] = new Enemy("Wolf 2", 100, 500, 0, "Fire");
+        Player duke = new Player("Duke");
+        duke.setElement("Earth");
+        allyTeam.addPlayerToTeam(duke);
+        Battle battle = new Battle(allyTeam, enemies);
+        battle.start();
+    }
+
 }

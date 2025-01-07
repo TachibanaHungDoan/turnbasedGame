@@ -20,6 +20,7 @@ public class Player {
 
     public void takeTurn(Enemy[] enemies, Player[] teams) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("This is " + this.name + " turn. " + this.name + "'s stat: " + this.health + " " + this.attack + " " + this.defense + ".");
         int action;
         while (true) {
             System.out.println("Choose action:");

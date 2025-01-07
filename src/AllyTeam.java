@@ -20,6 +20,7 @@ public class AllyTeam {
 
     public void applyElementResonance() {
         if (elementResonance.waterfalls) {
+            System.out.println("Water and Earth Resonance: Increase 20% of max hp!");
             for (Player player : team) {
                 if (player != null && player.isAlive()) {
                     int hpIncrease = player.maxHealth * 20 / 100;
