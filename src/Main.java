@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        /*Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter your character name: ");
         String playerName = scanner.nextLine();
@@ -32,9 +32,11 @@ public class Main {
         Enemy[] enemies = { new Enemy("Wolf1", 100, 500, 0, "Fire"), new Enemy("Wolf2", 100, 500, 0, "Fire") };
         Player[] teams = { player };
 
-        Battle battle = new Battle(player, teams, enemies);
+        Battle battle = new Battle(teams, enemies);
         battle.start();
 
-        scanner.close();
+        scanner.close();*/
+        Game game = new Game();
+        game.start();
     }
 }

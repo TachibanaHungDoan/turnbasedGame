@@ -89,7 +89,9 @@ public class Player {
 
     public void boostDefense(Player[] teams) {
         for (Player player : teams) {
-            player.defenseBoostTurns = 3;
+            if (player != null) {
+                player.defenseBoostTurns = 3;
+            }
         }
     }
 
@@ -103,7 +105,7 @@ public class Player {
             }
         }
         if (element.equals("Air")) {
-            damage /= 2;
+            damage = damage * 3 / 4;
         }
         enemy.takeDamage(damage);
         System.out.println(this.name + " attacks " + enemy.getName() + " for " + damage + " damage.");
@@ -111,12 +113,14 @@ public class Player {
 
     public void heal(int percentage, Player[] teams) {
         for (Player player : teams) {
-            int healAmount = player.maxHealth * percentage / 100;
-            player.health += healAmount;
-            if (player.health >= player.maxHealth) {
-                player.health = player.maxHealth;
+            if (player != null) {
+                int healAmount = player.maxHealth * percentage / 100;
+                player.health += healAmount;
+                if (player.health >= player.maxHealth) {
+                    player.health = player.maxHealth;
+                }
+                System.out.println(player.name + " heals for " + healAmount + " health. Remaining health: " + player.health);
             }
-            System.out.println(player.name + " heals for " + healAmount + " health. Remaining health: " + player.health);
         }
     }
 
@@ -124,7 +128,6 @@ public class Player {
         int actualDefense = this.defense;
         if (defenseBoostTurns > 0) {
             actualDefense += 200;
-            //System.out.println("Defense boost to " + actualDefense + ".");
         }
         int damageTaken = (int) Math.ceil( (double) damage / ((actualDefense + 100) / 100.0));
         this.health -= damageTaken;

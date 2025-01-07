@@ -1,11 +1,9 @@
 public class Battle {
-    Player player;
-    Player[] teams;
+    AllyTeam allyTeam;
     Enemy[] enemies;
 
-    public Battle(Player player, Player[] teams, Enemy[] enemies) {
-        this.player = player;
-        this.teams = teams;
+    public Battle(AllyTeam allyTeam, Enemy[] enemies) {
+        this.allyTeam = allyTeam;
         this.enemies = enemies;
     }
 
@@ -26,8 +24,10 @@ public class Battle {
                 }
             }
 
-            for (Player player : teams) {
-                player.takeTurn(enemies, teams);
+            for (Player player : allyTeam.team) {
+                if (player != null) {
+                    player.takeTurn(enemies, allyTeam.team);
+                }
             }
 
             for (Enemy enemy : enemies) {
@@ -35,8 +35,8 @@ public class Battle {
                     int damage = enemy.getAttack();
                     Player attackedPlayer = null;
                     while (attackedPlayer == null || !attackedPlayer.isAlive()) {
-                        int attackedPlayerIndex = (int) (Math.random() * teams.length);
-                        attackedPlayer = teams[attackedPlayerIndex];
+                        int attackedPlayerIndex = (int) (Math.random() * allyTeam.team.length);
+                        attackedPlayer = allyTeam.team[attackedPlayerIndex];
                     }
                     System.out.println(enemy.getName() + " attacks " + attackedPlayer.name + " for " + damage + " damage.");
                     attackedPlayer.takeDamage(damage);
@@ -46,17 +46,12 @@ public class Battle {
             battleOver = isGameOver();
             turnCount++;
 
-            if (turnCount % 5 == 0 && player.getElement().equals("Water")) {
-                System.out.println("Water Element - Healing 20% health.");
-                //player.heal(20);
-            }
-
             if (battleOver) {
                 System.out.println("Battle Over!");
-                if (player.isAlive()) {
-                    System.out.println(player.getName() + " wins!");
+                if (allyTeam.team[0].isAlive()) {
+                    System.out.println(allyTeam.team[0].getName() + " wins!");
                 } else {
-                    System.out.println(player.getName() + " has fallen!");
+                    System.out.println(allyTeam.team[0].getName() + " has fallen!");
                 }
             }
         }
@@ -64,8 +59,8 @@ public class Battle {
 
     public boolean isGameOver() {
         boolean allAlliesDead = true;
-        for (int i = 0; i < teams.length; i++) {
-            if (teams[i].isAlive()) {
+        for (int i = 0; i < allyTeam.team.length; i++) {
+            if (allyTeam.team[i].isAlive() && allyTeam.team[i] != null) {
                 allAlliesDead = false;
                 break;
             }
