@@ -1,10 +1,12 @@
+import java.util.Scanner;
+
 public class Battle {
     AllyTeam allyTeam;
-    Enemy[] enemies;
+    EnemyTeam enemyTeam;
 
-    public Battle(AllyTeam allyTeam, Enemy[] enemies) {
+    public Battle(AllyTeam allyTeam, EnemyTeam enemyTeam) {
         this.allyTeam = allyTeam;
-        this.enemies = enemies;
+        this.enemyTeam = enemyTeam;
     }
 
     public void start() {
@@ -16,21 +18,21 @@ public class Battle {
 
             //Enemy info
             System.out.println("Enemies Info:");
-            for (int i = 0; i < enemies.length; i++) {
-                if (!enemies[i].isAlive()) {
-                    System.out.println(i + 1 + ". " + enemies[i].getName() + " (" + enemies[i].getElement() + " - " + enemies[i].getHealth() + ")" + " - dead");
+            for (int i = 0; i < enemyTeam.enemies.length; i++) {
+                if (!enemyTeam.enemies[i].isAlive()) {
+                    System.out.println(i + 1 + ". " + enemyTeam.enemies[i].getName() + " (" + enemyTeam.enemies[i].getElement() + " - " + enemyTeam.enemies[i].getHealth() + ")" + " - dead");
                 } else {
-                    System.out.println(i + 1 + ". " + enemies[i].getName() + " (" + enemies[i].getElement() + " - " + enemies[i].getHealth() + ")");
+                    System.out.println(i + 1 + ". " + enemyTeam.enemies[i].getName() + " (" + enemyTeam.enemies[i].getElement() + " - " + enemyTeam.enemies[i].getHealth() + ")");
                 }
             }
 
             for (Player player : allyTeam.team) {
-                if (player != null) {
-                    player.takeTurn(enemies, allyTeam.team);
+                if (player != null && player.isAlive()) {
+                    player.takeTurn(enemyTeam.enemies, allyTeam.team);
                 }
             }
 
-            for (Enemy enemy : enemies) {
+            for (Enemy enemy : enemyTeam.enemies) {
                 if (enemy.isAlive()) {
                     int damage = enemy.getAttack();
                     Player attackedPlayer = null;
@@ -48,13 +50,44 @@ public class Battle {
 
             if (battleOver) {
                 System.out.println("Battle Over!");
-                if (allyTeam.team[0].isAlive()) {
-                    System.out.println(allyTeam.team[0].getName() + " wins!");
+                if (allyTeam.getMainCharacter().isAlive()) {
+                    resetHealthAfterBattle();
+                    System.out.println(allyTeam.getMainCharacter().getName() + " wins!");
+                    enhanceMainCharacter(allyTeam.getMainCharacter());
                 } else {
                     System.out.println(allyTeam.team[0].getName() + " has fallen!");
                 }
             }
         }
+    }
+
+    public void resetHealthAfterBattle() {
+        for (int i = 0; i < allyTeam.team.length; i++) {
+            allyTeam.team[i].health = allyTeam.team[i].maxHealth;
+        }
+    }
+
+    public void enhanceMainCharacter(Player player) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("You have to chance to upgrade yourself by increasing your stat for 50.");
+        System.out.println("Please choose your stat to upgrade: ");
+        System.out.println("1. Increase atk 50");
+        System.out.println("2. Increase hp 50");
+        System.out.println("3. Increase def 50");
+        int choice = scanner.nextInt();
+        if (choice == 1) {
+            System.out.println("You choose to increase your atk for 50!");
+            player.attack += 50;
+        } else if (choice == 2) {
+            System.out.println("You choose to increase your hp for 50!");
+            player.health += 50;
+        } else if (choice == 3) {
+            System.out.println("You choose to increase your def for 50!");
+            player.defense += 50;
+        } else {
+            System.out.println("Invalid. Deo cho tang");
+        }
+        System.out.println("Your stats now are: Hp: " + player.health + " - Atk: " + player.attack + " - Def: " + player.defense);
     }
 
     public boolean isGameOver() {
@@ -69,8 +102,8 @@ public class Battle {
             return true;
         }
         boolean allEnemiesDead = true;
-        for (int i = 0; i < enemies.length; i++) {
-            if (enemies[i].isAlive()) {
+        for (int i = 0; i < enemyTeam.enemies.length; i++) {
+            if (enemyTeam.enemies[i].isAlive()) {
                 allEnemiesDead = false;
                 break;
             }

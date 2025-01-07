@@ -2,8 +2,9 @@ import java.util.Scanner;
 
 public class Game {
     AllyTeam allyTeam;
-    Enemy[] enemies = new Enemy[3];
+    EnemyTeam enemyTeam;
     Player player;
+    Enemy[] enemies;
     Scanner scanner = new Scanner(System.in);
 
     public Game() {
@@ -25,7 +26,7 @@ public class Game {
 
         System.out.println("Choose your elemental affinity:");
         System.out.println("1. Water (Healer - Have the ability to heal all your allies 20% health)");
-        System.out.println("2. Earth (Tanker - Have the ability to increase your allies defense in 3 turns)");
+        System.out.println("2. Earth (Tanker - Have the ability to reduce enemy damage dealing teams for 3 turns)");
         System.out.println("3. Fire (Warrior - 40% chance for critical hit that deals double damage)");
         System.out.println("4. Air (Quick - Have the ability to attack all the enemies)");
 
@@ -47,25 +48,54 @@ public class Game {
             System.out.println("Invalid choice, defaulting to Water.");
             player.setElement("Water");
         }
+        enhanceCharacter(player);
         allyTeam.addPlayerToTeam(player);
     }
 
+    public void enhanceCharacter(Player player) {
+        System.out.println("Your stats are: Hp: " +  player.health + " - Atk: " + player.attack + " - Def: " + player.defense);
+        System.out.println("You have to chance to upgrade yourself by increasing your stat for 50.");
+        int choiceCountLeft = 2;
+        while (choiceCountLeft > 0) {
+            System.out.println("Please choose your stat to upgrade: ");
+            System.out.println("1. Increase atk 50");
+            System.out.println("2. Increase hp 50");
+            System.out.println("3. Increase def 50");
+            int choice = scanner.nextInt();
+            if (choice == 1) {
+                System.out.println("You choose to increase your atk for 50!");
+                player.attack += 50;
+            } else if (choice == 2) {
+                System.out.println("You choose to increase your hp for 50!");
+                player.health += 50;
+            } else if (choice == 3) {
+                System.out.println("You choose to increase your def for 50!");
+                player.defense += 50;
+            } else {
+                System.out.println("Invalid. Deo cho tang");
+            }
+            System.out.println("Your stats now are: Hp: " +  player.health + " - Atk: " + player.attack + " - Def: " + player.defense);
+            choiceCountLeft--;
+        }
+
+    }
+
     public void chapter1() {
-        enemies = new Enemy[2];
-        enemies[0] = new Enemy("Wolf 1", 100, 500, 0, "Fire");
-        enemies[1] = new Enemy("Wolf 2", 100, 500, 0, "Fire");
-        Battle battle = new Battle(allyTeam, enemies);
+        Enemy[] enemies = { new Enemy("Wolf1", 100, 500, 0, "Fire"), new Enemy("Wolf2", 100, 500, 0, "Fire") };
+        enemyTeam = new EnemyTeam(enemies.length);
+        enemyTeam.addEnemy(enemies);
+        Battle battle = new Battle(allyTeam, enemyTeam);
         battle.start();
     }
 
     public void chapter2ToTest() {
-        enemies = new Enemy[2];
-        enemies[0] = new Enemy("Wolf 1", 100, 500, 0, "Fire");
-        enemies[1] = new Enemy("Wolf 2", 100, 500, 0, "Fire");
+        Enemy[] enemies = { new Enemy("Wolf1", 100, 500, 0, "Fire"), new Enemy("Wolf2", 100, 500, 0, "Fire") };
+        enemyTeam = new EnemyTeam(enemies.length);
+        enemyTeam.addEnemy(enemies);
         Player duke = new Player("Duke");
         duke.setElement("Earth");
         allyTeam.addPlayerToTeam(duke);
-        Battle battle = new Battle(allyTeam, enemies);
+        Battle battle = new Battle(allyTeam, enemyTeam);
         battle.start();
     }
 

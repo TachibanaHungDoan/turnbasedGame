@@ -8,6 +8,7 @@ public class Player {
     int defense;
     String element;
     int defenseBoostTurns;
+    double criticalHitChance;
 
     public Player(String name) {
         this.name = name;
@@ -16,6 +17,7 @@ public class Player {
         this.health = maxHealth;
         this.defense = 50;
         this.defenseBoostTurns = 0;
+        this.criticalHitChance = 0.4;
     }
 
     public void takeTurn(Enemy[] enemies, Player[] teams) {
@@ -100,7 +102,7 @@ public class Player {
         int damage = this.attack;
         if (element.equals("Fire")) {
             double criticalChance = Math.random();
-            if (criticalChance < 0.4) {
+            if (criticalChance < criticalHitChance) {
                 damage *= 2;
                 System.out.println("Critical Hit! " + this.name + " deals double damage!");
             }

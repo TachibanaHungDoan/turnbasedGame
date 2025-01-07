@@ -18,6 +18,10 @@ public class AllyTeam {
         applyElementResonance();
     }
 
+    public Player getMainCharacter() {
+        return team[0];
+    }
+
     public void applyElementResonance() {
         if (elementResonance.waterfalls) {
             System.out.println("Water and Earth Resonance: Increase 20% of max hp!");
@@ -25,6 +29,14 @@ public class AllyTeam {
                 if (player != null && player.isAlive()) {
                     int hpIncrease = player.maxHealth * 20 / 100;
                     player.health += hpIncrease;
+                }
+            }
+        }
+
+        if(elementResonance.vaporize) {
+            for (Player player : team) {
+                if (player != null && player.isAlive()) {
+                    player.criticalHitChance = 0.6;
                 }
             }
         }
