@@ -26,7 +26,8 @@ public class Battle {
                 }
             }
 
-            for (Player player : allyTeam.team) {
+            for (int i = 0; i < allyTeam.team.length; i++) {
+                Player player = allyTeam.team[i];
                 if (player != null && player.isAlive()) {
                     player.takeTurn(enemyTeam.enemies, allyTeam.team);
                 }

@@ -33,7 +33,7 @@ public class ElementResonance {
     }
 
     public void checkResonance() {
-        waterfalls = containsElement("Water") && containsElement("Earth");
+        waterfalls = containsElement("Water") && containsElement("L");
         vaporize = containsElement("Water") && containsElement("Fire");
         blazing = containsElement("Fire") && containsElement("Air");
         sandstorm = containsElement("Air") && containsElement("Earth");

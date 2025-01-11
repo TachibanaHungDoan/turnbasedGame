@@ -26,7 +26,7 @@ public class Enemy {
     }
 
     public void takeDamage(int damage) {
-        int damageTaken = (int) Math.ceil( (double) damage / ((this.defense + 100) / 100.0));
+        int damageTaken = (int) (damage / ((this.defense + 100) / 100.0));
         this.health -= damageTaken;
         if (this.health <= 0) {
             this.health = 0;
