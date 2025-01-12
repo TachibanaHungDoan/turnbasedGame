@@ -44,6 +44,7 @@ public class Gesprach {
         		"[SpielerName]: Riechen? Wie?",
         		"Lilia: Ich bin eine Fee, nicht du, \nalso wirst du es nicht verstehen!",
         		"Dort drüben! Da sind zwei Wölfe, die Steine halten! \nGreift sie an!",
+        		"Der Kampf ist vorbei!"
 
          	};
     }

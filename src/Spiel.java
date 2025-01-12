@@ -18,7 +18,6 @@ public class Spiel {
         System.out.println("Bitte geben Sie Ihren Namen ein:");
         spielerName = scanner.nextLine();
         System.out.println("Herzlich willkommen, " + spielerName);
-        steam.Mitgliederhinzufugen(spieler);
         System.out.println("Drücken Sie „Enter/Eingabetaste“, um unsere Reise zu beginnen.");
 
         //kapitel 0
@@ -31,7 +30,7 @@ public class Spiel {
         
         //Element wählen
         HinzufugenSpieler();
-        
+        steam.Mitgliederhinzufugen(spieler);
         // entwicklen
         String[] dia3Text = Gesprach.dia3();
         for (int i = 0; i < dia3Text.length; i++) {

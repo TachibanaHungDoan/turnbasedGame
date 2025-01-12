@@ -16,7 +16,7 @@ public class Mitglieder {
         }
         neuteam[mitglieder.length] = spieler;
         mitglieder = neuteam;
-        er.Elementhinzufugen(spieler.element);
+        er.ElementhinzufugenMitglieder(spieler.element);
         ERAktivieren();
     }
 	
